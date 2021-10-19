@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bếp Minh Thành</title>
+
+    <style>
+      * /* Nhắm vào mọi phần tử trên trang */ { 
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box; /* Giữ nguyên kích thước hcn khi thay đổi padding, margin.. */
+      }
+
+      html {
+ 
+        font-size: 62.5%;
+        overflow-x: hidden; /* Nếu chiều rộng phần nội dung lớn hơn chiều rộng phần tử thì phần nội dung dư thừa sẽ bị ẩn đi */
+
+      }
+
+      body {
+        font-family: "Rubik", sans-serif;
+        line-height: 1;
+        font-weight: 400;
+        color: #555;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 120rem;
+        padding: 0 3.2rem;
+        margin: 0 auto;
+      }
+
+      .grid {
+        display: grid; /* tạo ra lưới */
+        column-gap: 6.4rem;
+        margin-bottom: 9.6rem; 
+      }
+
+
+
+      .grid:not(:last-child) {
+        margin-bottom: 9.6rem; /* ở thg grid cuối cùng sẽ margin */
+      }
+
+      .grid-2-cols {
+        grid-template-columns: repeat(2, 1fr); /* grid có 2 cột, mỗi cột kích thước 1fr */
+      }
+
+      .grid-3-cols {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .grid-4-cols {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+     .grid-5-cols {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+  
+      .heading-primary,
+      .heading-secondary,
+      .heading-tertiary {
+        font-weight: 700;
+        color: #333;
+        letter-spacing: -0.5px;
+      }
+
+      .heading-primary {
+        font-size: 5.2rem;
+        line-height: 1.05;
+        margin-bottom: 3.2rem;
+      }
+
+      .heading-secondary {
+        font-size: 4.4rem;
+        line-height: 1.2;
+        margin-bottom: 9.6rem;
+      }
+
+      .heading-tertiary {
+        font-size: 3rem;
+        line-height: 1.2;
+        margin-bottom: 3.2rem;
+      }
+
+      .subheading {
+        display: block;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #cf711f;
+        text-transform: uppercase;
+        margin-bottom: 1.6rem;
+        letter-spacing: 0.75px;
+      }
+
+      .btn {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 600;
+        padding: 1.6rem 3.2rem;
+        border-radius: 9px;
+        
+        border: none;
+        cursor: pointer; /* di vào nút thì con trỏ chuột sẽ ở dạng pointer */
+        font-family: inherit; /* kế thừa */
+        transition: all 1s; /* xác định một quá trình chuyển đổi khi có một hành động. */
+        -webkit-transition: all 1s /* hỗ trợ cho Google Chrome và Safari */
+      }
+
+      .btn-full {
+        background-color: #e67e22;
+        color: #fff;
+      }
+
+      .btn-full:hover {
+        background-color: #683c17;
+      }
+
+      .btn-outline {
+        background-color: #fff;
+        color: #555;
+      }
+
+      .btn-outline:hover {
+        background-color: #fce7d6;
+        box-shadow: inset 0 0 0 3px #fff; /* bóng ngang-dọc-độ nhòe bóng-màu */
+      }
+
+      .btn-form {
+        background-color: #45260a;
+        color: #fdf2e9;
+        align-self: end; /* căn chỉnh xuống dưới */
+        padding: 1.2rem;
+      }
+
+      .btn-form:hover {
+        background-color: #fff;
+        color: #555;
+      }
+
+      .link {
+        display: inline-block;
+        color: #e67e22;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 2px;
+        transition: all 1s; 
+        -webkit-transition: all 1s;
+      }
+
+      .link:hover {
+        color: #cf711f;
+        border-bottom: 1px solid transparent;
+      }
+
+      .list {
+        list-style: none;
+        display: flex;
+        flex-direction: column; /* list dc sx theo chiều dọc từ trên xuống */
+        gap: 1.6rem;
+      }
+
+      .list-item {
+        font-size: 2.2rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        line-height: 1.4;
+        margin-left: 80px;
+      }
+
+  
+
+      *:focus { /* chỉnh tất cả nx cái đang được chọn */
+        outline: none;
+        box-shadow: 0 0 0 0.8rem rgba(230, 125, 34, 0.5);
+      }
+
+      .center-text {
+        text-align: center;
+      }
+
+      strong {
+        font-weight: 500;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between; /* Gía trị này giúp cho các khoảng cách giữa các thành phần luôn bằng nhau, 
+                phần tử đầu luôn nằm sát trái, phần tử cuối luôn nằm sát phải */
+        align-items: center;
+        background-color: #fdf2e9;
+        height: 9.6rem;
+        padding: 0 4.8rem;
+        position: relative; /* Định vị một phần tử dựa trên vị trí tổ tiên gần nhất của nó */
+      }
+
+      .logo {
+        height: 2.4rem;
+      }
+
+      /**************************/
+      /* NAVIGATION */
+      /**************************/
+
+      .main-nav-list {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 4.8rem;
+      }
+
+      .main-nav-link:link,
+      .main-nav-link:visited {
+        display: inline-block;
+        text-decoration: none;
+        color: #333;
+        font-weight: 700;
+        font-size: 2.2rem;
+        transition: all 1s; 
+        -webkit-transition: all 1s
+      }
+
+      .main-nav-link:hover {
+        color: #cf711f;
+      }
+
+      .main-nav-link.nav-cta {
+        border-radius: 9px;
+        color: #fff;
+        background-color: #e67e22;
+      }
+
+      .main-nav-link.nav-cta:hover {
+        background-color: #814819;
+      }
+
+      .running {
+        background-color: rgba(255, 255, 255, 0.651);
+        display: block;
+        height: 65px;
+      }
+
+      /**************************/
+      /* HERO SECTION */
+      /**************************/
+
+      .section-hero {
+        background-color: #fdf2e9;
+        padding: 4.8rem 0 9.6rem 0;
+      }
+
+      .hero {
+        max-width: 130rem;
+        margin: 0 auto;
+        padding: 0 3.2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9.6rem;
+        align-items: center;
+      }
+
+      .hero-description {
+        font-size: 2rem;
+        line-height: 1.6;
+        margin-bottom: 4.8rem;
+      }
+
+      .hero-img {
+        width: 100%;
+      }
+
+      .delivered-meals {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+        margin-top: 8rem;
+      }
+
+      .delivered-text {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      .delivered-text span {
+        color: #cf711f;
+        font-weight: 700;
+      }
+
+      /**************************/
+      /* FEATURED IN SECTION */
+      /**************************/
+
+      .section-featured {
+        padding: 4.8rem 0 3.2rem 0;
+      }
+
+      .heading-featured-in {
+        font-size: 1.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
+        font-weight: 550;
+        text-align: center;
+        margin-bottom: 4.8rem;
+        color: #888;
+      }
+
+      .logos {
+        display: flex;
+        justify-content: space-around; /* Giá trị này cũng làm cho các khoảng cách giữa các phần tử bằng nhau như space-beetween, 
+                        nhưng thay đổi cả vị trí của hai phần tử đầu cuối */
+
+
+      }
+
+      .logos img {
+        height: 3.2rem;
+        filter: brightness(0); /* lọc màu(chỉnh độ sáng = 0)*/
+        opacity: 50%;
+      }
+
+      /**************************/
+      /* MEALS SECTION */
+      /**************************/
+      .section-meals {
+        padding: 9.6rem 0;
+      }
+
+      .meal {
+        box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+        border-radius: 11px;
+        overflow: hidden;
+        transition: all 0.4s; 
+        -webkit-transition: all 0.4s
+      }
+
+      .meal:hover {
+        transform: translateY(-1.2rem); 
+        box-shadow: 0 3.2rem 6.4rem rgba(0, 0, 0, 0.06);
+      }
+
+      .meal-content {
+        padding: 3.2rem 4.8rem 4.8rem 4.8rem;
+      }
+
+      .meal-title {
+        font-size: 2.4rem;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 3.2rem;
+      }
+
+      .meal-attributes {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .meal-attribute {
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+      }
+
+      .meal-img {
+        width: 100%;
+      }
+
+      .all-recipes {
+        text-align: center;
+        font-size: 1.8rem;
+      }
+
+      /**************************/
+      /* Review SECTION */
+      /**************************/
+
+      .section-review {
+        background-color: #fdf2e9;
+        display: grid;
+        grid-template-columns: 55fr 45fr;
+        align-items: center;
+      }
+
+      .review-container {
+        padding: 7rem;
+      }
+
+      .review {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 4.8rem;
+        column-gap: 8rem;
+      }
+
+      .reviews-img {
+        width: 8.2rem;
+        border-radius: 50%;
+        margin-bottom: 1.2rem;
+      }
+
+      .reviews-text {
+        font-size: 1.8rem;
+        line-height: 1.8;
+        margin-bottom: 1.6rem;
+      }
+
+      .reviews-name {
+        font-size: 1.6rem;
+        color: #6f6f6f;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.6rem;
+        padding: 1.6 rem;
+      }
+
+      .gallery-item {
+        overflow: hidden;
+      }
+
+      .gallery-item img {
+        display: block;
+        width: 100%;
+        transition: all 0.4s; 
+        -webkit-transition: all 0.4s
+      }
+
+      .gallery-item img:hover {
+        transform: scale(1.1);
+      }
+
+      /**************************/
+      /* CTA SECTION */
+      /**************************/
+
+      .section-cta {
+        padding: 4.8rem 0 12.8rem;
+        margin-top: 70px;
+      }
+
+      .cta {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        background-color: #e67e22;
+        background-image: linear-gradient(to right bottom, #eb984e, #e67e22); /* chỉnh màu tuyến tính */
+        overflow: hidden;
+        max-height: 550px;
+      }
+
+      .cta-text-box {
+        padding: 4.8rem 6.4rem 6.4rem 6.4rem;
+        color: #45260a;
+      }
+
+      .cta .heading-secondary {
+        color: #45260a;
+        color: inherit;
+        margin-bottom: 3.2rem;
+      }
+
+      .cta-text {
+        font-size: 1.8rem;
+        line-height: 1.8;
+        margin-bottom: 4.8rem;
+      }
+
+      .cta-img-box {
+        opacity: 70%;
+        overflow: hidden;
+        height: 100%;
+        width: 101%;
+      }
+
+      .cta-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 3.2rem;
+        row-gap: 2.4rem;
+      }
+
+      .cta-form label {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 500;
+        margin-bottom: 1.2rem;
+      }
+
+      .cta-form input,
+      .cta-form select {
+        width: 100%;
+        padding: 1.2rem;
+        font-size: 1.8rem;
+        font-family: inherit;
+        color: inherit;
+        border: none;
+        background-color: #fdf2e9;
+        border-radius: 9px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .cta-form input::placeholder {
+        color: #aaa;
+      }
+
+      /**************************/
+      /* FOOTER */
+      /**************************/
+
+      .footer {
+        padding: 3rem 0;
+        border-top: 2px solid #eee;
+      }
+
+      .grid-footer {
+        grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr;
+      }
+
+      .logo-col {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .footer-heading {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 2.5rem;
+      }
+
+      .contacts {
+        font-style: normal;
+        font-size: 1.6rem;
+        line-height: 1.3;
+      }
+
+      .address {
+        margin-bottom: 2.4rem;
+      }
+
+      .footer-nav {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .footer-link {
+        text-decoration: none;
+        font-size: 1.6rem;
+        color: #767676;
+        transition: all 0.4s; 
+        -webkit-transition: all 0.4s
+      }
+
+      .footer-link:hover {
+        color: rgb(105, 0, 0);
+      }
+
+     /**************************/
+      /* MENU */
+      /**************************/
+
+      .root-sx {
+        list-style: none;
+        float /* chuyển một phần tử sang góc trái hoặc phải của không gian bao quanh nó */: left; 
+        position: relative; 
+      }
+
+      .main-nav-link {
+        text-decoration: none;
+        color: white;
+        padding: 0px 15px 0px 15px;
+        line-height: 40px;
+        display: block;
+      }
+      
+      .submenu {
+        width: 150px;
+        background: #CFCFCF;
+        min-height: px;
+        display: none; /*ẩn submenu khi vào trang*/
+        position: absolute;
+      }
+      .submenu-sx {
+        list-style: none;
+      }
+
+      .submenu-sx.second {
+        color: rgb(68, 25, 0);
+        text-decoration: none;
+        display: block;
+        line-height: 40px;
+        font-size: 14px;
+        font-weight: 550;
+      }
+      
+      .root-sx:hover .submenu {
+        display: block;
+        transition: ease-out 0.35s; /*  hiệu ứng của quá trình chuyển đổi với một kết thúc chậm.*/
+        -webkit-transition: ease-out 0.35s;
+      }
+ 
+      .submenu .second:hover {
+        background: #e67e22;
+        transition: ease-in 0.35s; /* khởi đầu chậm */
+        -webkit-transition: ease-in 0.35s;
+      }
+     
+    
+    </style>
+  </head>
+  <body>
+    <marquee direction="left" class="running"> 
+      <p
+        style="
+          color: rgb(0, 0, 0);
+          font-size: 22px;
+          font-weight: 550;
+          margin-top: 4px;
+        "
+      >
+      <br/>
+        Bếp Minh Thành được bình chọn là nhà hàng trực tuyến có ảnh
+        hưỡng nhất ở Thế Giới trong khảo sát của Guinness toàn cầu và đã được trao
+        4 giải Michelin. Với phương trâm Bạn sẽ không còn phải băn khoăn hôm nay ăn gì, 
+        bếp Minh Thành chuyên cung cấp các gói ăn phong phú cho khách hàng đăng kí. 
+        Hãy đăng ký ngay để được thưởng thức vô số khẩu phần ăn đa dạng mỗi tháng
+      </p></marquee
+    >
+
+    <header class="header">
+      <a href="#">
+        <img class="logo" alt="Minh Thanh logo" src="img/oke.jpg" />
+      </a>
+      <div>
+        <ul class="root">
+          <li class="root-sx">
+            <a class="main-nav-link" href="#how">Giới Thiệu</a>
+          </li>
+          <li class="root-sx">
+            <a class="main-nav-link" href="#">Món Ăn</a>
+            <ul class="submenu">
+              <li class="submenu-sx"><a class="submenu-sx second" href="#meals">&nbsp;&nbsp;&nbsp;Dinh dưỡng</a></li>
+              <li class="submenu-sx"><a class="submenu-sx second" href="./Pricing.html">&nbsp;&nbsp;&nbsp;Giá Phần Ăn </a></li>
+            </ul>
+          </li>
+          <li class="root-sx">
+            <a class="main-nav-link" href="#review">Review</a>
+          </li>
+          <li class="root-sx"><a class="main-nav-link nav-cta" href="#cta">Khuyến Mãi</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section class="section-hero">
+        <div class="hero">
+          <div class="hero-text-box">
+            <h1 class="heading-primary">
+              Các phần ăn đầy đủ dinh dưỡng sẽ được giao đến tận giường  bạn mỗi ngày
+            </h1>
+            <p class="hero-description">
+              Bếp Minh Thành là bếp online đầu tiên tại Việt Nam chuyên cung cấp các phần ăn phong phú dựa trên các gói đăng ký của khách hàng. Bạn sẽ không còn phải suy nghĩ hôm nay ăn gì thêm 1 lần nào nữa!!!
+            </p>
+            <a href="#cta" class="btn btn-full margin-right-sm"
+              >Thưởng thức ngay</a
+            >
+
+            <a href="#how" class="btn btn-outline">Tìm hiểu thêm </a>
+            <div class="delivered-meals">
+              <p class="delivered-text">
+                <span>999,999,999+</span> Gói ăn đã được đăng ký!
+              </p>
+            </div>
+          </div>
+          <div class="hero-img-box">
+             <img
+                src="img/hero-min.png"
+                class="hero-img"
+                alt="Thưởng thức bếp Minh Thành, Khẩu phần ăn 1, Khẩu phần ăn 2"
+              />
+          </div>
+        </div>
+      </section>
+
+      <section class="section-featured">
+        <div class="container">
+          <h2 class="heading-featured-in">Được tin tưởng bởi những tạp chí hàng đầu thế giới</h2>
+          <div class="logos">
+            <img src="img/logos/techcrunch.png" alt="Techcrunch logo" />
+            <img
+              src="img/logos/business-insider.png"
+              alt="Business Insider logo"
+            />
+            <img
+              src="img/logos/the-new-york-times.png"
+              alt="The New York Times logo"
+            />
+            <img src="img/logos/forbes.png" alt="Forbes logo" />
+            <img src="img/logos/usa-today.png" alt="USA Today logo" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section-meals" id="meals">
+        <div class="container center-text">
+          <span class="subheading">Món Ăn</span>
+          <h2 class="heading-secondary">
+            Thực đơn chọn từ hơn 100,000 món ăn toàn cầu
+          </h2>
+        </div>
+
+        <div class="container grid grid-3-cols margin-bottom-md">
+          <div class="meal">
+            <img
+              src="img/meals/meal-1.jpg"
+              class="meal-img"
+              alt="Japanese Gyozas"
+            />
+            <div class="meal-content">
+              <p class="meal-title">Há Cảo Malaysia</p>
+              <ul class="meal-attributes">
+                <li class="meal-attribute">
+                  <span>Há cảo tôm Caribe </span>
+                </li>
+                <li class="meal-attribute">
+                  <span>Há cảo bò Waygu </span>
+                </li>
+                <li class="meal-attribute">
+                  <span>Há cảo cốm Himalya</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="meal">
+            <img
+              src="img/meals/meal-2.jpg"
+              class="meal-img"
+              alt="Avocado Salad"
+            />
+            <div class="meal-content">
+              <p class="meal-title">Salad Bơ Indonesia</p>
+              <ul class="meal-attributes">
+                <li class="meal-attribute">
+                  <span>Bơ mật Scavana</span>
+                </li>
+                <li class="meal-attribute">
+                  <span>Cà chua Loteria</span>
+                </li>
+                <li class="meal-attribute">
+                  <span>Hạt điều Brazilia</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="diets">
+            <h3 class="heading-tertiary">Đáp ứng mọi nhu cầu </h3>
+            <ul class="list">
+              <li class="list-item">
+                <span>&malt; Ăn chay</span>
+              </li>
+              <li class="list-item">
+                <span>&malt; Giảm cân</span>
+              </li>
+              <li class="list-item">
+                <span>&malt; Tăng cân</span>
+              </li>
+              <li class="list-item">
+                <span>&malt; Tăng cơ</span>
+              </li>
+              <li class="list-item">
+                <span>&malt; Ung thư</span>
+              </li>
+              <li class="list-item">
+                <span>&malt; Có thai</span>
+              </li>
+              <li class="list-item">
+                <span>&malt; Trẻ nhỏ</span>
+              </li>
+              <li class="list-item">
+                <span>&malt; TIểu đường</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="container all-recipes">
+          <a href="#meals" class="link">Xem toàn bộ thực đơn &rarr;</a>
+        </div>
+      </section>
+
+      <section class="section-review" id="review">
+        <div class="review-container">
+          <span class="subheading">Review từ khách hàng</span>
+          <h2 href="#review" class="heading-secondary">Thiên đường ẩm thực online, sức hút không thể chối từ!!!</h2>
+
+          <div class="review">
+            <figure class="reviews">
+              <img
+                class="reviews-img"
+                alt="Ảnh reviewer"
+                src="img/customers/DVH.jpg"
+              />
+              <p class="reviews-text">
+                Nếu bạn hỏi tôi: Ngon, Bổ, Rẻ, Phong phú là tất cả những gì tôi có thể nói về bếp Minh Thành. Thực sự tuyệt vời!
+              </p>
+              <p class="reviews-name">&mdash; Đờm Vẫn Hơn</p>
+            </figure>
+
+            <figure class="reviews">
+              <img
+                class="reviews-img"
+                alt="Ảnh reviewer "
+                src="img/customers/HL.jpg"
+              />
+              <p class="reviews-text">
+               Bếp Minh Thành thực sự đã cứu tôi khỏi những bữa ăn qua loa không đủ chất dinh dưỡng, quả thật là một trải nghiệm thú vị!
+              </p>
+              <p class="reviews-name">&mdash; Hoài Linh</p>
+            </figure>
+
+            <figure class="reviews">
+              <img
+                class="reviews-img"
+                alt="Ảnh reviewer "
+                src="img/customers/TT.jpg"
+              />
+              <p class="reviews-text">
+                Tôi thường băn khoăn không biết hôm nay mình nên ăn gì và điều đó đã lấy của tôi rất nhiều thời gian nhưng nhờ có bếp Minh Thành tôi như được trút bỏ gánh nặng ấy!
+              </p>
+              <p class="reviews-name">&mdash; Thủy Tề</p>
+            </figure>
+
+            <figure class="reviews">
+              <img
+                class="reviews-img"
+                alt="Ảnh reviewer"
+                src="img/customers/PH.jpg"
+              />
+              <p class="reviews-text">
+                Thưởng thức nền ẩm thực toàn cầu chỉ với một nút chạm và thậm chí tôi còn không phải bước ra khỏi giường để làm điều đó, còn gì tuyệt vời hơn nữa!
+              </p>
+              <p class="reviews-name">&mdash; Nguyễn Phương Hằng</p>
+            </figure>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-1.jpg"
+              alt="Đồ ăn"
+            />
+
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-2.jpg"
+              alt="Đồ ăn"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-3.jpg"
+              alt="Đồ ăn"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-4.jpg"
+              alt="Đồ ăn"
+            />
+          </figure>
+
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-6.jpg"
+              alt="Đồ ăn"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-7.jpg"
+              alt="Đồ ăn"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-8.jpg"
+              alt="Đồ ăn"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-11.jpg"
+              alt="Đồ ăn"
+              />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/gallery-12.jpg"
+              alt="Đồ ăn"
+            />
+          </figure>
+        </div>
+      </section>
+
+
+      <section class="section-cta" id="cta">
+        <div class="container">
+          <div class="cta">
+            <div class="cta-text-box">
+              <h2 class="heading-secondary">Nhận ngay phần ăn miễn phí!</h2>
+              <p class="cta-text">
+                Những phần ăn hấp dẫn, phong phú, đầy đủ chất dinh dưỡng với giá cả phải chăng
+                đang chờ đợi để bạn nếm thử. Vậy còn chần chờ gì mà không bắt đầu thưởng thức ngay 
+                phần ăn thử miễn phí của chúng tôi.
+              </p>
+
+              <form class="cta-form" name="sign-up" >
+                <div>
+                  <label for="full-name">Họ và tên</label>
+                  <input placeholder="Minh Thành" />
+                </div>
+
+                <div>
+                  <label for="email">Địa chỉ Email</label>
+                  <input placeholder="abc@gmail.com" />
+                </div>
+
+                <div>
+                  <label for="select-where">Bạn nghe đến chúng tôi từ đâu?</label>
+                  <select id="select-where" name="select-where">
+                    <option value="">Hãy chọn 1 cách thức:</option>
+                    <option value="friends">Bạn bè, người thân</option>
+                    <option value="youtube">YouTube </option>
+                    <option value="tiktok">Tiktok</option>
+                    <option value="facebook">Facebook </option>
+                    <option value="others">Khác</option>
+                  </select>
+                </div>
+
+                <button class="btn btn-form">Đăng ký ngay</button>
+
+              </form>
+
+            </div>
+
+              <img class="cta-img-box" alt="Thưởng thức bếp Minh Thành"  src="img/ninh.jpeg" />         
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container grid grid-footer">
+        <div class="logo-col">
+          <a href="#" class="footer-logo">
+            <img class="logo" alt="Minh Thanh logo" src="img/oke.jpg" />
+          </a>
+        </div>
+
+        <div class="address-col">
+          <p class="footer-heading">Địa chỉ liên hệ</p>
+          <address class="contacts">
+            <p class="address">
+              313 Trường Trinh, phường Thanh Xuân Trung Hà Nội
+            </p>
+            <p>
+              <a class="footer-link" href="#">0298999999</a
+              ><br />
+              <a class="footer-link" href="#"
+                >bepminhthanh@gmail.com</a
+              >
+            </p>
+          </address>
+        </div>
+
+        <nav class="nav-col">
+          <p class="footer-heading">Tài khoản </p>
+          <ul class="footer-nav">
+            <li><a class="footer-link" href="#">Đăng ký</a></li>
+            <li><a class="footer-link" href="#">Đăng nhập</a></li>
+            <li><a class="footer-link" href="#">Chuyển tiếp </a></li>
+ 
+          </ul>
+        </nav>
+
+        <nav class="nav-col">
+          <p class="footer-heading">Chúng tôi</p>
+          <ul class="footer-nav">
+            <li><a class="footer-link" href="#">Giới thiệu</a></li>
+            <li><a class="footer-link" href="#">Nghề nghiệp</a></li>
+            <li><a class="footer-link" href="#">Tìm đối tác</a></li>
+
+          </ul>
+        </nav>
+
+        <nav class="nav-col">
+          <p class="footer-heading">Hỗ trợ</p>
+          <ul class="footer-nav">
+            <li><a class="footer-link" href="#">Văn phòng</a></li>
+            <li><a class="footer-link" href="#">Trung tâm trợ giúp</a></li>
+            <li><a class="footer-link" href="#">Điều khoản hỗ trợ</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

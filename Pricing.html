@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bếp Minh Thành</title>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 62.5%;
+        overflow-x: hidden;
+      }
+
+      body {
+        font-family: "Rubik", sans-serif;
+        line-height: 1;
+        font-weight: 400;
+        color: #555;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 120rem;
+        padding: 0 3.2rem;
+        margin: 0 auto;
+      }
+
+      .grid {
+        display: grid; /* tạo ra lưới */
+        column-gap: 6.4rem;
+        margin-bottom: 9.6rem; 
+      }
+
+
+
+      .grid:not(:last-child) {
+        margin-bottom: 9.6rem; /* ở thg grid cuối cùng sẽ margin */
+      }
+
+      .grid-2-cols {
+        grid-template-columns: repeat(2, 1fr); /* grid có 2 cột, mỗi cột kích thước 1fr */
+      }
+
+      .grid-3-cols {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .grid-4-cols {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+     .grid-5-cols {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+  
+      .heading-primary,
+      .heading-secondary,
+      .heading-tertiary {
+        font-weight: 700;
+        color: #333;
+        letter-spacing: -0.5px;
+      }
+
+      .heading-primary {
+        font-size: 5.2rem;
+        line-height: 1.05;
+        margin-bottom: 3.2rem;
+      }
+
+      .heading-secondary {
+        font-size: 4.4rem;
+        line-height: 1.2;
+        margin-bottom: 9.6rem;
+      }
+
+      .heading-tertiary {
+        font-size: 3rem;
+        line-height: 1.2;
+        margin-bottom: 3.2rem;
+      }
+
+      .subheading {
+        display: block;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #cf711f;
+        text-transform: uppercase;
+        margin-bottom: 1.6rem;
+        letter-spacing: 0.75px;
+      }
+
+      .btn {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 600;
+        padding: 1.6rem 3.2rem;
+        border-radius: 9px;
+        
+        border: none;
+        cursor: pointer; /* di vào nút thì con trỏ chuột sẽ ở dạng pointer */
+        font-family: inherit; /* kế thừa */
+        transition: all 1s; /* xác định một quá trình chuyển đổi khi có một hành động. */
+        -webkit-transition: all 1s /* hỗ trợ cho Google Chrome và Safari */
+      }
+
+      .btn-full {
+        background-color: #e67e22;
+        color: #fff;
+      }
+
+      .btn-full:hover {
+        background-color: #683c17;
+      }
+
+      .btn-outline {
+        background-color: #fff;
+        color: #555;
+      }
+
+      .btn-outline:hover {
+        background-color: #fce7d6;
+        box-shadow: inset 0 0 0 3px #fff; /* bóng ngang-dọc-độ nhòe bóng-màu */
+      }
+
+      .btn-form {
+        background-color: #45260a;
+        color: #fdf2e9;
+        align-self: end; /* căn chỉnh xuống dưới */
+        padding: 1.2rem;
+      }
+
+      .btn-form:hover {
+        background-color: #fff;
+        color: #555;
+      }
+
+ 
+
+      .list {
+        list-style: none;
+        display: flex;
+        flex-direction: column; /* list dc sx theo chiều dọc từ trên xuống */
+        gap: 1.6rem;
+      }
+
+      .list-item {
+        font-size: 1.8rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        line-height: 1.4;
+        margin-left: 60px;
+      }
+
+  
+
+      *:focus { /* chỉnh tất cả nx cái đang được chọn */
+        outline: none;
+        box-shadow: 0 0 0 0.8rem rgba(230, 125, 34, 0.5);
+      }
+
+      .center-text {
+        text-align: center;
+      }
+
+      strong {
+        font-weight: 500;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between; /* Gía trị này giúp cho các khoảng cách giữa các thành phần luôn bằng nhau, 
+                phần tử đầu luôn nằm sát trái, phần tử cuối luôn nằm sát phải */
+        align-items: center;
+        background-color: #fdf2e9;
+        height: 9.6rem;
+        padding: 0 4.8rem;
+        position: relative; /* Định vị một phần tử dựa trên vị trí tổ tiên gần nhất của nó */
+      }
+
+      .logo {
+        height: 2.4rem;
+      }
+
+      .section-pricing {
+        padding: 2.6rem 0;
+      }
+
+      .pricing-plan {
+        border-radius: 11px;
+
+        width: 75%;
+      }
+
+      .pricing-plan-starter {
+        justify-self: end;
+        border: 2px solid #fdf2e9;
+        padding: 4.6rem;
+      }
+
+      .pricing-plan-complete {
+        background-color: #fdf2e9;
+        padding: 4.8rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .plan-header {
+        text-align: center;
+        margin-bottom: 4.8rem;
+      }
+
+      .plan-name {
+        color: #cf711f;
+        font-weight: 600;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.75;
+        margin-bottom: 3.2rem;
+      }
+
+      .plan-price {
+        font-size: 6.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1.6rem;
+      }
+
+      .plan-price span {
+        font-size: 3rem;
+        font-weight: 500;
+        margin-right: 0.8rem;
+      }
+
+      .plan-text {
+        font-size: 1.6rem;
+        line-height: 1.6;
+        color: #6f6f6f;
+      }
+
+      .plan-sing-up {
+        text-align: center;
+        margin-top: 4.8rem;
+      }
+
+      .plan-details {
+        font-size: 1.9rem;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .feature-title {
+        font-size: 2.4rem;
+        color: #333;
+        font-weight: 700;
+        margin-bottom: 1.6rem;
+      }
+
+      .feature-text {
+        font-size: 1.8rem;
+        line-height: 1.8;
+      }
+
+      .main-nav-list {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 4.8rem;
+      }
+
+      .main-nav-link:link,
+      .main-nav-link:visited {
+        display: inline-block;
+        text-decoration: none;
+        color: #333;
+        font-weight: 700;
+        font-size: 2.2rem;
+        transition: all 0.3s;
+      }
+
+      .main-nav-link:hover {
+        color: #cf711f;
+      }
+
+      .main-nav-link.nav-cta {
+        /* padding: 1.2rem 2.4rem; */
+        border-radius: 9px;
+        color: #fff;
+        background-color: #e67e22;
+      }
+
+      .main-nav-link.nav-cta:hover {
+        background-color: #814819;
+      }
+   
+     /**************************/
+      /* MENU */
+      /**************************/
+
+      .root-sx {
+        list-style: none;
+        float /* chuyển một phần tử sang góc trái hoặc phải của không gian bao quanh nó */: left; 
+        position: relative; 
+      }
+
+      .main-nav-link {
+        text-decoration: none;
+        color: white;
+        padding: 0px 15px 0px 15px;
+        line-height: 40px;
+        display: block;
+      }
+      
+      .submenu {
+        width: 150px;
+        background: #CFCFCF;
+        min-height: px;
+        display: none; /*ẩn submenu khi vào trang*/
+        position: absolute;
+      }
+      .submenu-sx {
+        list-style: none;
+      }
+
+      .submenu-sx.second {
+        color: rgb(68, 25, 0);
+        text-decoration: none;
+        display: block;
+        line-height: 40px;
+        font-size: 14px;
+        font-weight: 550;
+      }
+      
+      .root-sx:hover .submenu {
+        display: block;
+        transition: ease-out 0.35s; /*  hiệu ứng của quá trình chuyển đổi với một kết thúc chậm.*/
+        -webkit-transition: ease-out 0.35s;
+      }
+ 
+      .submenu .second:hover {
+        background: #e67e22;
+        transition: ease-in 0.35s; /* khởi đầu chậm */
+        -webkit-transition: ease-in 0.35s;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <a href="#">
+        <img class="logo" alt="Minh Thanh logo" src="img/oke.jpg" />
+      </a>
+      <div>
+        <ul class="root">
+          <li class="root-sx">
+            <a class="main-nav-link" href="./WebBtvn.html">Giới thiệu</a>
+          </li>
+          <li class="root-sx">
+            <a class="main-nav-link" href="#">Món ăn</a>
+            <ul class="submenu">
+              <li class="submenu-sx"><a class="submenu-sx second" href="./WebBtvn.html">&nbsp;&nbsp;&nbsp; Dinh dưỡng</a></li>
+              <li class="submenu-sx"><a class="submenu-sx second" href="#">&nbsp;&nbsp;&nbsp;Giá phần ăn </a></li>
+            </ul>
+          </li>
+          <li class="root-sx">
+            <a class="main-nav-link" href="./WebBtvn.html">Review</a>
+          </li>
+          <li class="root-sx"><a class="main-nav-link nav-cta" href="./WebBtvn.html">Khuyến mãi</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <section class="section-pricing" id="pricing">
+      <div class="container">
+        <span class="subheading">Giá phần ăn</span>
+        <h2 class="heading-secondary">Ăn no không lo về giá</h2>
+      </div>
+
+      <div class="container grid grid-2-cols margin-bottom-md">
+        <div class="pricing-plan pricing-plan-starter">
+          <header class="plan-header">
+            <p class="plan-name">Gói vàng</p>
+            <p class="plan-price">3,000,000</p>
+            <p class="plan-text">1 tháng. Tức chỉ 80,000 một bữa!</p>
+          </header>
+          <ul class="list">
+            <li class="list-item">
+
+              <span>2 bữa một ngày</span>
+            </li>
+            <li class="list-item">
+
+              <span>Đặt hàng từ 9h-20h</span>
+            </li>
+            <li class="list-item">
+
+              <span>Miễn phí giao hàng 3km</span>
+            </li>
+            <li class="list-item">
+
+              <span>Thực đơn Châu Á</span>
+            </li>
+          </ul>
+          <div class="plan-sing-up">
+            <a href="#" class="btn btn-full">Thưởng thức ngay</a>
+          </div>
+        </div>
+
+        <div class="pricing-plan pricing-plan-complete">
+          <header class="plan-header">
+            <p class="plan-name">Gói kim cương</p>
+            <p class="plan-price">4,900,000</p>
+            <p class="plan-text">1 tháng. Tức chỉ 90,000 một bữa!</p>
+          </header>
+          <ul class="list">
+            <li class="list-item">
+              <span>4 bữa một ngày</span>
+            </li>
+            <li class="list-item">
+  
+              <span>Đặt hàng từ 24h/ngày</span>
+            </li>
+            <li class="list-item">
+           
+               <span>Miễn phí giao hàng toàn quốc</span>
+            </li>
+            <li class="list-item">
+        
+              <span>Thực đơn toàn cầu</span>
+            </li>
+          </ul>
+          <div class="plan-sing-up">
+            <a href="#" class="btn btn-full">Thưởng thức ngay</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container grid">
+        <aside class="plan-details">
+        Giá các gói ăn đã bao gồm tất cả các loại thuế và chi phí liên quan!
+        </aside>
+      </div>
+
+      <div class="container grid grid-4-cols">
+        <div class="feature">
+          <p class="feature-title">Never cook again</p>
+          <p class="feature-text">
+           Các gói ăn của chúng tôi bao gồm các bữa ăn được giao 365 ngày/năm do đó bạn sẽ không còn phải lo chuyện náu nướng
+          </p>
+        </div>
+        <div class="feature">
+          <p class="feature-title">Evironment</p>
+          <p class="feature-text">
+            Sản phẩm chúng tôi được tạo ra từ những sản phẩm có thể phân hủy, đảm bảo thân thiện với môi trường
+          </p>
+        </div>
+      
+        <div class="feature">
+          <ion-icon class="feature-icon" name="pause-outline"></ion-icon>
+          <p class="feature-title">Flexible</p>
+          <p class="feature-text">
+            Bạn hoàn toàn có thể dừng những bữa mà bạn muốn ăn ở những nơi khác, chúng tôi sẽ hoàn tiền cho bạn
+        </div>
+        <div class="feature">
+          <p class="feature-title">Fresh and Healthy</p>
+          <p class="feature-text">
+            Thực đơn của chúng tôi được tạo ra từ những thực phẩm sạch, nguồn gốc xuất xứ rõ ràng với quy trình nghiêm ngặt 
+          </p>
+        </div>
+       
+      </div>
+    </section>
+  </body>
+</html>
